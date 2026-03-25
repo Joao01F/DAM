@@ -46,10 +46,9 @@ fun main() {
     val cacheIS = Cache<Int, String>()
     cacheIS.put(1, "Alice")
     cacheIS.put(2, "Bob")
-    cacheIS.put(3, "3")
 
 
-    println("--- Word frequency cache ---")
+    println("\n--- Word frequency cache ---")
     println("Size: ${cacheSI.size()}")
     println("Frequency of \"one\": ${cacheSI.get("one")}")
     println(
@@ -70,4 +69,12 @@ fun main() {
     println("Transform \"one\" (+1): ${cacheSI.transform("one", action = { it + 1 })}")
     println("Transform \"one\" (+1): ${cacheSI.transform("siz", action = { it + 1 })}")
     println("Snapshot: ${cacheSI.snapshot()}")
+
+    println("\n--- Id registry cache ---")
+    println("Id 1 -> ${cacheIS.get(1)}")
+    println("Id 2 -> ${cacheIS.get(2)}")
+    cacheIS.evict(1)
+    println("After evict id 1, size: ${cacheIS.size()}")
+    println("Id 1 after evict -> ${cacheIS.get(1)}")
+
 }
