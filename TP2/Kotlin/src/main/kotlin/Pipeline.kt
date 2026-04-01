@@ -35,13 +35,22 @@ fun main() {
     )
 
     val pipeline = buildPipeline {
-        addStage("Trim") { it.map { line -> line.trim() } }
+        addStage("Trim") { it.map { it.trim() } }
+        //addStage("Trim") { it.map { line -> line.trim() } }
+        //addStage("Trim") { it.map(String::trim) }
+
         addStage("Filter error") { it.filter { it.contains("ERROR") } }
+        //addStage("Filter error") { it.filter { line -> line.contains("ERROR") } }  // explicit name
+        //addStage("Filter error") { it.filter { "ERROR" in it } }  // using 'in' operator
+
         addStage("Uppercase") { it.map { line -> line.uppercase() } }
+        //addStage("Uppercase") { it.map(String::uppercase) }
+
         addStage("Add index") {
             var index = 0
             it.map { line -> "${++index}. $line" }
         }
+        //addStage("Add index") { it.mapIndexed { index, line -> "${index + 1}. $line" } }
     }
 
     println("Pipeline stages:")
