@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CoolWeatherApp</string>
+    <string name="longitude">Longitude</string>
+    <string name="temperature">Temperature</string>
+    <string name="button">Button</string>
+    <string name="wind_speed">Wind Speed</string>
 </resources>
