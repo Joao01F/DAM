@@ -4,4 +4,7 @@
     <string name="temperature">Temperature</string>
     <string name="button">Button</string>
     <string name="wind_speed">Wind Speed</string>
+    <string name="lisbon_lat">38.7167</string>
+    <string name="lisbon_long">-9.1333</string>
+    <string name="latitude">Latitude</string>
 </resources>

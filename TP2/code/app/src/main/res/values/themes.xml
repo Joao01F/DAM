@@ -25,6 +25,8 @@
 
     <style name="Theme.Night" parent="Theme.CoolWeatherApp">
         <item name="android:windowBackground">@drawable/weather_bck_dark</item>
+        <item name="android:textColor">@color/teal_200</item>
+        <item name="android:editTextColor">@color/teal_200</item>
     </style>
 
     <style name="Theme.Night.Land" parent="Theme.CoolWeatherApp">

@@ -4,15 +4,21 @@ data class WeatherData(
     var latitude: String,
     var longitude: String,
     var timezone: String,
-    var current_weather: CurrentWeather,
+    var current: CurrentWeather,
+    var current_units: CurrentUnits,
     var hourly: Hourly
 )
 
+data class CurrentUnits(
+    var temperature_2m: String,
+    var wind_speed_10m: String
+)
+
 data class CurrentWeather(
-    var temperature: Float,
-    var windspeed: Float,
+    var temperature_2m: Float,
+    var wind_speed_10m: Float,
     var winddirection: Int,
-    var weathercode: Int,
+    var weather_code: Int,
     var time: String
 )
 
@@ -55,9 +61,9 @@ enum class WMO_WeatherCode(var code: Int, var image: String) {
 }
 
 fun getWeatherCodeMap(): Map<Int, WMO_WeatherCode> {
-    var weatherMap = HashMap<Int, WMO_WeatherCode>()
-    WMO_WeatherCode.values().forEach {
-        weatherMap.put(it.code, it)
+    val weatherMap = HashMap<Int, WMO_WeatherCode>()
+    WMO_WeatherCode.entries.forEach {
+        weatherMap[it.code] = it
     }
     return weatherMap
 }
