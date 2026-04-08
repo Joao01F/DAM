@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="longitude">Longitude</string>
+    <string name="button">Atualizar</string>
+    <string name="wind_speed">Velocidade do Vento</string>
+    <string name="latitude">Latitude</string>
+    <string name="prec_prob">Probabilidade de Precipitação</string>
+</resources>

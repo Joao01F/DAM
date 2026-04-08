@@ -3,9 +3,12 @@ package dam_A47478.coolweatherapp
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -13,17 +16,16 @@ import java.io.InputStreamReader
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
-    private var day = false
+    private val day = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val themeId = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> if (day) R.style.Theme_Day else R.style.Theme_Night
-            Configuration.ORIENTATION_LANDSCAPE -> if (day) R.style.Theme_Day_Land else R.style.Theme_Night_Land
-            else -> R.style.Theme_Day // Default fallback
+            Configuration.ORIENTATION_LANDSCAPE -> R.style.Theme_CoolWeatherApp_Land
+            else -> R.style.Theme_CoolWeatherApp
         }
-
         setTheme(themeId)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -33,12 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             fetchWeatherData(lat.text.toString().toFloat(), long.text.toString().toFloat()).start()
-            println("Update! $day")
-            day = !day
         }
     }
 
-    private fun fetchWeatherData(lat: Float, long: Float) : Thread {
+    private fun fetchWeatherData(lat: Float, long: Float): Thread {
         return Thread {
             val weather = WeatherAPI_Call(lat, long)
             updateUI(weather)
@@ -48,28 +48,46 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI(request: WeatherData) {
         println("UpdateUI")
         runOnUiThread {
-            val weatherImage : ImageView = findViewById(R.id.weatherIcon)
+            val weatherImage: ImageView = findViewById(R.id.weatherIcon)
 
-            val windLabel : TextView = findViewById(R.id.windspeed_label)
-            val wind : TextView = findViewById(R.id.windspeed_text)
-            val windUnit : String = request.current_units.wind_speed_10m
+            // Labels
+            val mintempLabel: TextView = findViewById(R.id.min_temp_label)
+            val maxtempLabel: TextView = findViewById(R.id.max_temp_label)
+            val precipLabel: TextView = findViewById(R.id.prec_prob_label)
+            val windLabel: TextView = findViewById(R.id.wind_speed_label)
 
-            val tempLabel : TextView = findViewById(R.id.temperature_label)
-            val temp : TextView = findViewById(R.id.temperature_text)
-            val tempUnit : String = request.current_units.temperature_2m
+            // Text fields
+            val min_temp: TextView = findViewById(R.id.min_temp_text)
+            val max_temp: TextView = findViewById(R.id.max_temp_text)
+            val precip: TextView = findViewById(R.id.prec_prob_text)
+            val wind: TextView = findViewById(R.id.wind_speed_text)
 
+            // Units
+            val tempUnit: String = request.daily_units.temperature_2m_min
+            val precipUnit: String = request.daily_units.precipitation_probability_max
+            val windUnit: String = request.daily_units.wind_speed_10m_max
+
+            mintempLabel.text = getString(R.string.min_temperature, tempUnit)
+            maxtempLabel.text = getString(R.string.max_temperature, tempUnit)
+            mintempLabel.visibility = View.VISIBLE
+            maxtempLabel.visibility = View.VISIBLE
+            precipLabel.visibility = View.VISIBLE
             windLabel.visibility = View.VISIBLE
-            tempLabel.visibility = View.VISIBLE
-            wind.text = "${request.current.wind_speed_10m.toString()} $windUnit"
-            temp.text = "${request.current.temperature_2m.toString()} $tempUnit"
+
+            min_temp.text = "${request.daily.temperature_2m_min.get(0).toString()} $tempUnit"
+            max_temp.text = "${request.daily.temperature_2m_max.get(0).toString()} $tempUnit"
+            wind.text = "${request.daily.wind_speed_10m_max.get(0).toString()} $windUnit"
+            precip.text =
+                "${request.daily.precipitation_probability_max.get(0).toString()} $precipUnit"
 
             val mapt = getWeatherCodeMap();
-            val wCode = mapt.get(request.current.weather_code)
-            val wImage = when(wCode) {
+            val wCode = mapt.get(request.daily.weather_code.get(0))
+            val wImage = when (wCode) {
                 WMO_WeatherCode.CLEAR_SKY,
                 WMO_WeatherCode.MAINLY_CLEAR,
-                WMO_WeatherCode.PARTLY_CLOUDY->if(day) wCode?.image+"day" else
-                    wCode?.image+"night"
+                WMO_WeatherCode.PARTLY_CLOUDY -> if (day) wCode?.image + "day" else
+                    wCode?.image + "night"
+
                 else -> wCode?.image
             }
             val res = getResources()
@@ -77,23 +95,21 @@ class MainActivity : AppCompatActivity() {
             val resID = res.getIdentifier(wImage, "drawable", getPackageName());
             val drawable = this.getDrawable(resID);
             weatherImage.setImageDrawable(drawable);
-
-            //TODO ...
         }
     }
 
-    private fun WeatherAPI_Call(lat: Float, long: Float) : WeatherData {
-        // https://api.open-meteo.com/v1/forecast?latitude=38.7167&longitude=-9.1333&current=temperature_2m,weather_code,wind_speed_10m&timezone=auto&forecast_days=3
+    private fun WeatherAPI_Call(lat: Float, long: Float): WeatherData {
+        // https://api.open-meteo.com/v1/forecast?latitude=38.7167&longitude=-9.1333&daily=precipitation_probability_max,temperature_2m_min,temperature_2m_max,weather_code,wind_speed_10m_max&timezone=auto&forecast_days=3
         val reqString = buildString {
             append("https://api.open-meteo.com/v1/forecast?")
             append("latitude=${lat}&longitude=${long}&")
-            append("current=temperature_2m,weather_code,wind_speed_10m&")
+            append("daily=precipitation_probability_max,temperature_2m_min,temperature_2m_max,weather_code,wind_speed_10m_max&")
             append("timezone=auto&forecast_days=3")
         }
         val str = reqString.toString()
         val url = URL(reqString.toString());
         url.openStream().use {
-            val request = Gson().fromJson(InputStreamReader(it,"UTF-8"),WeatherData::class.java)
+            val request = Gson().fromJson(InputStreamReader(it, "UTF-8"), WeatherData::class.java)
             return request
         }
     }

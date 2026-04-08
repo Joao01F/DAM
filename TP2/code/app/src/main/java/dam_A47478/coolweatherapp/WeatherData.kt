@@ -4,29 +4,23 @@ data class WeatherData(
     var latitude: String,
     var longitude: String,
     var timezone: String,
-    var current: CurrentWeather,
-    var current_units: CurrentUnits,
-    var hourly: Hourly
+    var daily: Daily,
+    var daily_units: DailyUnits,
 )
 
-data class CurrentUnits(
-    var temperature_2m: String,
-    var wind_speed_10m: String
+data class DailyUnits(
+    var precipitation_probability_max: String,
+    var temperature_2m_min: String,
+    var wind_speed_10m_max: String
 )
 
-data class CurrentWeather(
-    var temperature_2m: Float,
-    var wind_speed_10m: Float,
-    var winddirection: Int,
-    var weather_code: Int,
-    var time: String
-)
-
-data class Hourly(
-    var time: ArrayList<String>,
-    var temperature_2m: ArrayList<Float>,
-    var weathercode: ArrayList<Int>,
-    var pressure_msl: ArrayList<Double>
+data class Daily(
+    var precipitation_probability_max: ArrayList<Int>,
+    var temperature_2m_min: ArrayList<Float>,
+    var temperature_2m_max: ArrayList<Float>,
+    var wind_speed_10m_max: ArrayList<Float>,
+    var weather_code: ArrayList<Int>,
+    var time: ArrayList<String>
 )
 
 enum class WMO_WeatherCode(var code: Int, var image: String) {

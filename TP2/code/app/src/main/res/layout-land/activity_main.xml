@@ -5,16 +5,185 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/weather_bck_landscape"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ImageView
+        android:id="@+id/textBck"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/bg_square" />
+
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/update"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/latitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/latitude"
+        app:layout_constraintBottom_toBottomOf="@+id/latitude_text"
+        app:layout_constraintStart_toStartOf="@+id/textBck"
+        app:layout_constraintTop_toTopOf="@+id/latitude_text" />
+
+    <TextView
+        android:id="@+id/longitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/longitude"
+        app:layout_constraintBottom_toBottomOf="@+id/longitude_text"
+        app:layout_constraintStart_toStartOf="@+id/latitude_label"
+        app:layout_constraintTop_toTopOf="@+id/longitude_text" />
+
+    <TextView
+        android:id="@+id/min_temp_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/min_temperature"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/min_temp_text"
+        app:layout_constraintStart_toStartOf="@+id/latitude_label"
+        app:layout_constraintTop_toTopOf="@+id/min_temp_text" />
+
+    <TextView
+        android:id="@+id/max_temp_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/max_temperature"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/max_temp_text"
+        app:layout_constraintStart_toStartOf="@+id/latitude_label"
+        app:layout_constraintTop_toTopOf="@+id/max_temp_text" />
+
+    <TextView
+        android:id="@+id/prec_prob_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/prec_prob"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/prec_prob_text"
+        app:layout_constraintStart_toStartOf="@+id/latitude_label"
+        app:layout_constraintTop_toTopOf="@+id/prec_prob_text" />
+
+    <TextView
+        android:id="@+id/wind_speed_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/wind_speed"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/wind_speed_text"
+        app:layout_constraintStart_toStartOf="@+id/latitude_label"
+        app:layout_constraintTop_toTopOf="@+id/wind_speed_text" />
+
+    <EditText
+        android:id="@+id/latitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:background="@android:color/transparent"
+        android:inputType="numberDecimal|numberSigned"
+        android:text="@string/lisbon_lat"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/textBck"
+        app:layout_constraintTop_toTopOf="@+id/textBck" />
+
+    <EditText
+        android:id="@+id/longitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:inputType="numberDecimal|numberSigned"
+        android:text="@string/lisbon_long"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/latitude_text"
+        app:layout_constraintTop_toBottomOf="@+id/latitude_text" />
+
+    <EditText
+        android:id="@+id/min_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/longitude_text"
+        app:layout_constraintTop_toBottomOf="@+id/longitude_text" />
+
+    <EditText
+        android:id="@+id/max_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/min_temp_text"
+        app:layout_constraintTop_toBottomOf="@+id/min_temp_text" />
+
+    <EditText
+        android:id="@+id/prec_prob_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/max_temp_text"
+        app:layout_constraintTop_toBottomOf="@+id/max_temp_text" />
+
+    <EditText
+        android:id="@+id/wind_speed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="@+id/max_temp_text"
+        app:layout_constraintTop_toBottomOf="@+id/prec_prob_text" />
+
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button"
+        app:layout_constraintBottom_toTopOf="@+id/daySelect"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/daySelect"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textBck"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
