@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">System Information</string>
+    <string name="manufacturer">Manufacturer: %1$s</string>
+    <string name="model">Model: %1$s</string>
+    <string name="brand">Brand: %1$s</string>
+    <string name="type">Type: %1$s</string>
+    <string name="user">User: %1$s</string>
+    <string name="base">Base: %1$s</string>
+    <string name="incremental">Incremental: %1$s</string>
+    <string name="sdk">SDK: %1$s</string>
+    <string name="versionCode">Version Code: %1$s</string>
+    <string name="display">Display: %1$s</string>
+</resources>

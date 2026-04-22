@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Solitaire</string>
+    <string name="hello_world">Hello Android World!</string>
+    <string name="firstAppHeader">My First App</string>
+    <string name="imgDescription">A basketball</string>
+    <string name="activity_oncreate_msg">" Activity %1$s onCreate"</string>
+</resources>

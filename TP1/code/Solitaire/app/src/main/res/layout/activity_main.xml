@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#006400"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Top Row: Deck, Waste, Space, 4 Foundations -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deckPile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#DDDDDD"
+            android:gravity="center"
+            android:text="Deck" />
+
+        <TextView
+            android:id="@+id/wastePile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="Waste" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/foundation1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#AAAAAA"
+            android:gravity="center"
+            android:text="F1" />
+
+        <TextView
+            android:id="@+id/foundation2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#AAAAAA"
+            android:gravity="center"
+            android:text="F2" />
+
+        <TextView
+            android:id="@+id/foundation3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#AAAAAA"
+            android:gravity="center"
+            android:text="F3" />
+
+        <TextView
+            android:id="@+id/foundation4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#AAAAAA"
+            android:gravity="center"
+            android:text="F4" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Bottom Row: 7 Tableaus -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tableau1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T1" />
+
+        <TextView
+            android:id="@+id/tableau2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T2" />
+
+        <TextView
+            android:id="@+id/tableau3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T3" />
+
+        <TextView
+            android:id="@+id/tableau4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T4" />
+
+        <TextView
+            android:id="@+id/tableau5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T5" />
+
+        <TextView
+            android:id="@+id/tableau6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T6" />
+
+        <TextView
+            android:id="@+id/tableau7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:background="#EEEEEE"
+            android:gravity="top|center_horizontal"
+            android:paddingTop="8dp"
+            android:text="T7" />
+    </LinearLayout>
+
+</LinearLayout>
