@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.cooljetpackweatherapp"
+    namespace = "dam_a47478.weathercompose"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.cooljetpackweatherapp"
+        applicationId = "dam_a47478.weathercompose"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
