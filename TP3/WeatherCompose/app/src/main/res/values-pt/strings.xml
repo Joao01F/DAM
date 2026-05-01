@@ -4,4 +4,8 @@
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="update_weather">Atualizar Meteorologia</string>
+    <string name="temperature">Temperatura</string>
+    <string name="wind_speed">Vel. do Vento</string>
+    <string name="time">Hora</string>
+    <string name="timezone">Zona</string>
 </resources>

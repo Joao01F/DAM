@@ -15,8 +15,8 @@ class WeatherViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(WeatherUIState())
     val uiState: StateFlow<WeatherUIState> = _uiState.asStateFlow()
 
-    fun updateLatitude(lat: Float) { _uiState.update { it.copy(latitude = lat) } }
-    fun updateLongitude(lon: Float) { _uiState.update { it.copy(longitude = lon) } }
+    fun updateLatitude(lat: String) { _uiState.update { it.copy(latitude = lat) } }
+    fun updateLongitude(lon: String) { _uiState.update { it.copy(longitude = lon) } }
 
     @OptIn(InternalSerializationApi::class)
     fun fetchWeather() {

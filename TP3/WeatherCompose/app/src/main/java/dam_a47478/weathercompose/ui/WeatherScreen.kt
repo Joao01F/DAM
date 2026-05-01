@@ -1,7 +1,6 @@
 package dam_a47478.weathercompose.ui
 
 import android.content.res.Configuration
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dam_a47478.weathercompose.viewmodel.WeatherViewModel
@@ -79,14 +77,10 @@ fun WeatherUI(weatherViewModel: WeatherViewModel = viewModel()) {
             time,
             timezone,
             onLatitudeChange = { newValue ->
-                newValue.toFloatOrNull()?.let {
-                    weatherViewModel.updateLatitude(it)
-                }
+                weatherViewModel.updateLatitude(newValue)
             },
             onLongitudeChange = { newValue ->
-                newValue.toFloatOrNull()?.let {
-                    weatherViewModel.updateLongitude(it)
-                }
+                weatherViewModel.updateLongitude(newValue)
             },
             onUpdateButtonClick = {
                 weatherViewModel.fetchWeather()
@@ -105,14 +99,10 @@ fun WeatherUI(weatherViewModel: WeatherViewModel = viewModel()) {
             time,
             timezone,
             onLatitudeChange = { newValue ->
-                newValue.toFloatOrNull()?.let {
-                    weatherViewModel.updateLatitude(it)
-                }
+                weatherViewModel.updateLatitude(newValue)
             },
             onLongitudeChange = { newValue ->
-                newValue.toFloatOrNull()?.let {
-                    weatherViewModel.updateLongitude(it)
-                }
+                weatherViewModel.updateLongitude(newValue)
             },
             onUpdateButtonClick = {
                 weatherViewModel.fetchWeather()
@@ -124,8 +114,8 @@ fun WeatherUI(weatherViewModel: WeatherViewModel = viewModel()) {
 @Composable
 fun PortraitWeatherUI(
     wIcon: Int,
-    latitude: Float,
-    longitude: Float,
+    latitude: String,
+    longitude: String,
     temperature: Float,
     windSpeed: Float,
     windDirection: Int,
@@ -150,7 +140,9 @@ fun PortraitWeatherUI(
             Image(
                 painter = painterResource(id = wIcon),
                 contentDescription = "Weather Icon",
-                modifier = Modifier.size(150.dp).padding(16.dp),
+                modifier = Modifier
+                    .size(150.dp)
+                    .padding(16.dp),
             )
         }
 
@@ -192,8 +184,8 @@ fun PortraitWeatherUI(
 @Composable
 fun LandscapeWeatherUI(
     wIcon: Int,
-    latitude: Float,
-    longitude: Float,
+    latitude: String,
+    longitude: String,
     temperature: Float,
     windSpeed: Float,
     windDirection: Int,
@@ -222,7 +214,9 @@ fun LandscapeWeatherUI(
                 Image(
                     painter = painterResource(id = wIcon),
                     contentDescription = "Weather Icon",
-                    modifier = Modifier.size(120.dp).weight(.2f)
+                    modifier = Modifier
+                        .size(120.dp)
+                        .weight(.2f)
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -262,8 +256,8 @@ fun LandscapeWeatherUI(
 @Composable
 fun CoordinateBox(
     modifier: Modifier,
-    latitude: Float,
-    longitude: Float,
+    latitude: String,
+    longitude: String,
     onLatitudeChange: (String) -> Unit,
     onLongitudeChange: (String) -> Unit
 ) {
