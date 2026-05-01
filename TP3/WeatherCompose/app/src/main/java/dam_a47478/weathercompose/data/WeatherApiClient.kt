@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
 
 object WeatherApiClient {
@@ -18,13 +19,14 @@ object WeatherApiClient {
         }
     }
 
+    @OptIn(InternalSerializationApi::class)
     suspend fun getWeather(lat: Float, lon: Float): WeatherData? {
         val reqString = buildString {
-            //https://api.open-meteo.com/v1/forecast?latitude=38.7167&longitude=-9.1333&current_weather=true&hourly=temperature_2m,weathercode,pressure_msl,windspeed_10m
+            //https://api.open-meteo.com/v1/forecast?latitude=38.7167&longitude=-9.1333&current_weather=true&hourly=temperature_2m,weathercode,pressure_msl,windspeed_10m&timezone=auto
             append("https://api.open-meteo.com/v1/forecast?")
             append("latitude=${lat}&longitude=${lon}&")
             append("current_weather=true&")
-            append("hourly=temperature_2m,weathercode,pressure_msl,windspeed_10m")
+            append("hourly=temperature_2m,weathercode,pressure_msl,windspeed_10m&timezone=auto")
         }
         println("Getting URL: $reqString")
         return try {

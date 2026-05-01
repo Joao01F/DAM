@@ -1,33 +1,41 @@
 package dam_a47478.weathercompose.data
 
+import kotlinx.serialization.Serializable
+
+@kotlinx.serialization.InternalSerializationApi
+@Serializable
 data class WeatherData(
-    var latitude: String,
-    var longitude: String,
-    var timezone: String,
-    var daily: Daily,
-    var daily_units: DailyUnits,
-    var current_weather: CurrentWeather
+    val latitude: Float,
+    val longitude: Float,
+    val generationtime_ms: Double,
+    val utc_offset_seconds: Int,
+    val timezone: String,
+    val timezone_abbreviation: String,
+    val elevation: Float,
+    val current_weather: CurrentWeather? = null,
+    val hourly: HourlyData? = null
 )
 
+@kotlinx.serialization.InternalSerializationApi
+@Serializable
 data class CurrentWeather(
-    var time: String,
-    var temperature: Float,
-    var windspeed: Float
+    val time: String,
+    val interval: Int,
+    val temperature: Float,
+    val windspeed: Float,
+    val winddirection: Int,
+    val is_day: Int,
+    val weathercode: Int
 )
 
-data class DailyUnits(
-    var precipitation_probability_max: String,
-    var temperature_2m_min: String,
-    var wind_speed_10m_max: String
-)
-
-data class Daily(
-    var precipitation_probability_max: ArrayList<Int>,
-    var temperature_2m_min: ArrayList<Float>,
-    var temperature_2m_max: ArrayList<Float>,
-    var wind_speed_10m_max: ArrayList<Float>,
-    var weather_code: ArrayList<Int>,
-    var time: ArrayList<String>
+@kotlinx.serialization.InternalSerializationApi
+@Serializable
+data class HourlyData(
+    val time: List<String>,
+    val temperature_2m: List<Float>,
+    val weathercode: List<Int>,
+    val pressure_msl: List<Float>,
+    val windspeed_10m: List<Float>
 )
 
 enum class WMO_WeatherCode(var code: Int, var image: String) {
