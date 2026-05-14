@@ -71,11 +71,12 @@ class AIAssistantGeminiClasses(override val properties: Properties) : AIAssistan
             parts = listOf(part)
         )
         val geminiRequest = GeminiRequest(
-            contents = listOf(content)
-            , generationConfig = GenerationConfig(
-                temperature = 0.7,
-                maxOutputTokens = 800
-        ))
+            contents = listOf(content),
+            generationConfig = GenerationConfig(
+                temperature = temperature,
+                maxOutputTokens = maxTokens
+            )
+        )
 
         // Convert to JSON string using Gson
         val requestBody = gson.toJson(geminiRequest)

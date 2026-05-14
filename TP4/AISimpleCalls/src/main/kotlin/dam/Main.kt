@@ -29,6 +29,7 @@ fun main() = runBlocking {
 
     // Display a welcome message
     println("💬 Type your questions and press Enter to chat with the AI.")
+    println("💬 Use /sentiment <text> to analyze sentiment on a 1-7 scale.")
     println("💬 Press Ctrl+D (Unix/Mac) or Ctrl+Z (Windows) to exit.\n")
 
     // Main interaction loop
@@ -44,9 +45,40 @@ fun main() = runBlocking {
             continue
         }
 
+        val sentimentInput = input.removePrefix("/sentiment").trim()
+        if (input.startsWith("/sentiment", ignoreCase = true) && sentimentInput.isNotBlank()) {
+            properties.apply {
+                setProperty("TEMPERATURE", "0.1")
+            }
+
+            val output = assistant.analyzeSentiment(sentimentInput)
+            println("\n🤖 Sentiment: $output\n\n")
+            continue
+        }
+
+        properties.apply {
+            setProperty("TEMPERATURE", "0.5")
+        }
+
         // Process input
         val output = assistant.processInput(input)
-        println("\n🤖 Answer: $output\n\n")
+        println("\n🤖 Answer (0): $output\n\n")
+
+//        properties.apply {
+//            setProperty("TEMPERATURE", "0.0")
+//        }
+//
+//        // Process input
+//        val output = assistant.processInput(input)
+//        println("\n🤖 Answer (.5): $output\n\n")
+//
+//        properties.apply {
+//            setProperty("TEMPERATURE", "1.0")
+//        }
+//
+//        // Process input
+//        output = assistant.processInput(input)
+//        println("\n🤖 Answer (1): $output\n\n")
     }
 
     // Bye message

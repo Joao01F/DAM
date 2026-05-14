@@ -48,6 +48,12 @@ class AIAssistantGemini(override val properties: Properties) : AIAssistant {
         // Build the complete request body with model selection and content
         val requestBody = JSONObject()
             .put("contents", messagesArray)
+            .put(
+                "generationConfig",
+                JSONObject()
+                    .put("temperature", temperature)
+                    .put("maxOutputTokens", maxTokens)
+            )
             .toString()  // Convert to JSON string
 
         // Configure the HTTP request with proper headers and authentication

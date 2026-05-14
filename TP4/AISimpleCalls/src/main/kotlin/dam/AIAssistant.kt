@@ -50,6 +50,19 @@ interface AIAssistant {
      */
     var model: String
 
+    val temperature: Double
+        get() = properties.getProperty("TEMPERATURE")
+            ?.takeUnless { it.equals("None", ignoreCase = true) }
+            ?.toDoubleOrNull()
+            ?.coerceIn(0.0, 2.0)
+            ?: 0.7
+
+    val maxTokens: Int
+        get() = properties.getProperty("MAX_TOKENS")
+            ?.toIntOrNull()
+            ?.takeIf { it > 0 }
+            ?: 800
+
 
     /**
      * Provides an instance of OkHttpClient used for making HTTP requests.
@@ -100,6 +113,18 @@ interface AIAssistant {
     }
 
     /**
+     * Processes user input as a sentiment analysis request.
+     *
+     * @param input The text to classify
+     * @return A JSON object with the sentiment rating and justification
+     * @throws Exception If API call fails or response processing fails
+     */
+    suspend fun analyzeSentiment(input: String): String {
+        val formattedPrompt = buildSentimentAnalysisPrompt(input)
+        return apiCallWithBackoff(formattedPrompt)
+    }
+
+    /**
      * Builds a structured prompt for the Gemini model with consistent instructions.
      * This ensures the model responds predictably with a consistent personality.
      *
@@ -112,6 +137,31 @@ interface AIAssistant {
             The preferred language is English.
             Respond in a friendly and helpful manner.
             The user's request is: "$input"
+            """.trimIndent()
+    }
+
+    /**
+     * Builds a prompt for sentiment analysis using the 7-point scale required by the tutorial.
+     */
+    fun buildSentimentAnalysisPrompt(input: String): String {
+        return """
+            Analyze the sentiment of the text below.
+            Use this 7-point scale:
+            1. Very Negative
+            2. Negative
+            3. Slightly Negative
+            4. Neutral
+            5. Slightly Positive
+            6. Positive
+            7. Very Positive
+
+            Respond only with valid JSON in this exact shape:
+            {
+              "rating": 4,
+              "justification": "Short explanation of the rating."
+            }
+
+            Text: "$input"
             """.trimIndent()
     }
 
@@ -213,37 +263,7 @@ interface AIAssistant {
 
                 logger.debug("Raw API response: {}", responseBody)
 
-                // Validate the response structure
-                if (!json.has("candidates") || json.getJSONArray("candidates").length() == 0) {
-                    return "Error: No candidates found in the API response"
-                }
-
-                val candidates = json.getJSONArray("candidates")
-                val firstCandidate = candidates.getJSONObject(0)
-
-                // Validate if the "content" key exists in the first candidate
-                if (!firstCandidate.has("content")) {
-                    return "Error: No content found in the API response"
-                }
-
-                val content = firstCandidate.getJSONObject("content")
-
-                // Validate if the "parts" key exists and has content
-                if (!content.has("parts") || content.getJSONArray("parts").length() == 0) {
-                    return "Error: No parts found in the API response"
-                }
-
-                val parts = content.getJSONArray("parts")
-                val firstPart = parts.getJSONObject(0)
-
-                // Extract the text content
-                if (!firstPart.has("text")) {
-                    return "Error: No text found in the API response"
-                }
-
-                val text = firstPart.getString("text")
-
-                return text.trim()
+                return extractResponseText(json)
 
             } catch (e: JSONException) {
                 // Log the error and include part of the response body for debugging
@@ -259,6 +279,46 @@ interface AIAssistant {
                 throw Exception("Failed to parse API response: ${e.message}", e)
             }
         }
+    }
+
+    /**
+     * Extracts text from the response formats used by Gemini and OpenAI chat completions.
+     */
+    fun extractResponseText(json: JSONObject): String {
+        if (json.has("candidates") && json.getJSONArray("candidates").length() > 0) {
+            val firstCandidate = json.getJSONArray("candidates").getJSONObject(0)
+            if (!firstCandidate.has("content")) {
+                return "Error: No content found in the API response"
+            }
+
+            val content = firstCandidate.getJSONObject("content")
+            if (!content.has("parts") || content.getJSONArray("parts").length() == 0) {
+                return "Error: No parts found in the API response"
+            }
+
+            val firstPart = content.getJSONArray("parts").getJSONObject(0)
+            if (!firstPart.has("text")) {
+                return "Error: No text found in the API response"
+            }
+
+            return firstPart.getString("text").trim()
+        }
+
+        if (json.has("choices") && json.getJSONArray("choices").length() > 0) {
+            val firstChoice = json.getJSONArray("choices").getJSONObject(0)
+            if (!firstChoice.has("message")) {
+                return "Error: No message found in the API response"
+            }
+
+            val message = firstChoice.getJSONObject("message")
+            if (!message.has("content")) {
+                return "Error: No content found in the API response"
+            }
+
+            return message.getString("content").trim()
+        }
+
+        return "Error: No candidates or choices found in the API response"
     }
 
     /**
