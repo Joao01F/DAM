@@ -1,0 +1,4 @@
+^174 [Test worker @kotlinx.coroutines.test runner#2] INFO  Contributors - org: loaded 3 repos
+S181 [Test worker @coroutine#5] INFO  Contributors - repo-3: loaded 2 contributors
+S184 [Test worker @coroutine#3] INFO  Contributors - repo-1: loaded 2 contributors
+S185 [Test worker @coroutine#4] INFO  Contributors - repo-2: loaded 2 contributors

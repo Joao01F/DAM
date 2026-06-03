@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tasks.Request7ChannelsKtTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-05-13T19:12:39.504Z" hostname="BLASHA" time="0.377">
+  <properties/>
+  <testcase name="testChannels" classname="tasks.Request7ChannelsKtTest" time="0.377"/>
+  <system-out><![CDATA[174 [Test worker @kotlinx.coroutines.test runner#2] INFO  Contributors - org: loaded 3 repos
+181 [Test worker @coroutine#5] INFO  Contributors - repo-3: loaded 2 contributors
+184 [Test worker @coroutine#3] INFO  Contributors - repo-1: loaded 2 contributors
+185 [Test worker @coroutine#4] INFO  Contributors - repo-2: loaded 2 contributors
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
